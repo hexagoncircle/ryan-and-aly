@@ -436,6 +436,7 @@ a[href] {
   &::before {
     content: counter(tracklist-counter, decimal-leading-zero);
     flex: 0 0 var(--space-sm);
+    font-feature-settings: "tnum";
     display: flex;
     align-items: center;
     height: var(--art-size);

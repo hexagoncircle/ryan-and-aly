@@ -385,6 +385,8 @@ a[href] {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 var(--space-sm);
     flex: 0 0 var(--space-sm);
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
