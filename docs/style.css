@@ -445,11 +445,13 @@ a[href] {
   justify-items: center;
   width: 100%;
   max-width: 500px;
+  max-height: 400px;
   padding: 2rem 1rem 1rem;
   overflow: hidden; }
   @media (min-width: 900px) {
     .thermostat {
-      max-width: 40vw; } }
+      max-width: 40vw;
+      max-height: unset; } }
   .thermostat > * {
     grid-area: 1 / -1; }
 
@@ -457,6 +459,10 @@ a[href] {
 .thermostat-control,
 .svg-thermostat {
   max-width: 600px; }
+
+.svg-thermostat {
+  -ms-touch-action: manipulation !important;
+  touch-action: manipulation !important; }
 
 .thermostat-content {
   text-align: center; }
@@ -578,10 +584,6 @@ a[href] {
   80% {
     -webkit-transform: translateY(0.25rem);
     transform: translateY(0.25rem); } }
-
-@media (max-width: 899px) {
-  #outro {
-    margin-top: calc(var(--space-lg) * -1); } }
 
 @media (prefers-reduced-motion) {
   :root {

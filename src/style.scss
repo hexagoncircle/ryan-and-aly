@@ -512,11 +512,13 @@ a[href] {
   justify-items: center;
   width: 100%;
   max-width: 500px;
+  max-height: 400px;
   padding: 2rem 1rem 1rem;
   overflow: hidden;
 
   @media (min-width: $bp-md) {
     max-width: 40vw;
+    max-height: unset;
   }
 
   > * {
@@ -528,6 +530,10 @@ a[href] {
 .thermostat-control,
 .svg-thermostat {
   max-width: 600px;
+}
+
+.svg-thermostat {
+  touch-action: manipulation !important;
 }
 
 .thermostat-content {
@@ -662,13 +668,6 @@ a[href] {
   }
   80% {
     transform: translateY(0.25rem);
-  }
-}
-
-// Outro
-#outro {
-  @media (max-width: $bp-md - 1) {
-    margin-top: calc(var(--space-lg) * -1);
   }
 }
 
