@@ -468,6 +468,7 @@ a[href] {
   display: grid;
   grid-gap: var(--space-md);
   justify-items: center;
+  overflow: hidden;
 
   @media (min-width: $bp-md) {
     grid-template-columns: 1fr 1fr;
@@ -507,18 +508,16 @@ a[href] {
 
 // Thermostat
 .thermostat {
+  position: relative;
   display: grid;
   align-items: start;
   justify-items: center;
   width: 100%;
   max-width: 500px;
-  max-height: 400px;
-  padding: 2rem 1rem 1rem;
-  overflow: hidden;
+  padding-top: 2rem;
 
   @media (min-width: $bp-md) {
     max-width: 40vw;
-    max-height: unset;
   }
 
   > * {
@@ -532,12 +531,22 @@ a[href] {
   max-width: 600px;
 }
 
+.thermostat-range,
+.thermostat-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
 .svg-thermostat {
   touch-action: manipulation !important;
 }
 
 .thermostat-content {
   text-align: center;
+  margin-bottom: var(--space-xs);
 
   .button {
     position: relative;
