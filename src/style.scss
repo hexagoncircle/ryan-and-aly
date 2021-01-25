@@ -87,6 +87,7 @@ body {
 .eyebrow {
   justify-self: center;
   font-family: var(--font-primary);
+  font-size: clamp(0.85rem, 1.5vw, 1.5rem);
 }
 
 .heading {
@@ -167,9 +168,15 @@ a[href] {
 
 .svg-tree-right,
 .svg-tree-left,
+.svg-desert-right,
+.svg-desert-left,
 .svg-stars {
   max-width: 25vw;
   pointer-events: none;
+
+  @media (max-width: $bp-sm - 1) {
+    min-width: 250px;
+  }
 }
 
 .svg-stars > * {
@@ -185,10 +192,35 @@ a[href] {
   }
 }
 
+.svg-desert-right {
+  transform: translate3d(4%, 10%, 0);
+}
+
+.svg-desert-left {
+  transform: translate3d(-3%, 15%, 0);
+}
+
+.svg-desert-right,
+.svg-desert-left {
+  opacity: 1;
+
+  [data-mode="dark"] & {
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  [data-mode="light"] & {
+    filter: blur(0.1px);
+    transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2)
+        var(--ease),
+      opacity calc(var(--duration) * 4) var(--ease);
+  }
+}
+
 // Header
 .header {
   display: grid;
-  margin: 25vw 0 var(--space-lg);
+  margin: var(--space-sm) 0;
 
   @media (min-width: $bp-sm) {
     grid-template: auto 1fr / 1fr auto;
@@ -197,14 +229,14 @@ a[href] {
 }
 
 .header .svg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  grid-column: 2 / -1;
-  grid-row: 1 / -1;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
 
   @media (min-width: $bp-sm) {
-    position: static;
+    grid-column: 2 / -1;
+    grid-row: 1 / -1;
     display: block;
   }
 }
@@ -233,8 +265,9 @@ a[href] {
 
   .tagline {
     display: block;
-    font-size: clamp(1rem, 2vw, 2.25rem);
+    font-size: clamp(1.125rem, 2vw, 2.25rem);
     font-family: var(--font-heading);
+    margin-top: var(--space-xxs);
     letter-spacing: 0.25vw;
     text-transform: uppercase;
 

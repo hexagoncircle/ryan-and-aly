@@ -62,7 +62,7 @@ const handleThermostatUpdate = (value) => {
   setThermostatProgress((value / 360) * 100);
 };
 
-gsap.to(".svg-stars", {
+gsap.to(".svg-parallax", {
   yPercent: -10,
   ease: "none",
   scrollTrigger: {
