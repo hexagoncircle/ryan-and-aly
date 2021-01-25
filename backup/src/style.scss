@@ -1,0 +1,66 @@
+:root {
+  --color-primary: hsl(38, 100%, 37%);
+  --color-secondary: hsl(0, 0%, 95%);
+  --duration: 400ms;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-theme="dark"] {
+  --color-primary: hsl(0, 0%, 92%);
+  --color-secondary: hsl(0, 0%, 8%);
+}
+
+.no-js {
+  --duration: 0s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  transition: background-color var(--duration) var(--ease);
+  background-color: var(--color-secondary);
+}
+
+svg {
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  margin: 4rem 0;
+}
+
+.desert-scene {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  fill: var(--color-primary);
+  transition: fill calc(var(--duration) * 2) var(--ease);
+  padding-left: 1rem;
+
+  .moon,
+  .stars {
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: transform var(--duration) var(--duration) var(--ease),
+      opacity var(--duration) var(--ease);
+  }
+}
+
+[data-theme="dark"] .desert-scene {
+  .moon,
+  .stars {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform calc(var(--duration) * 4) calc(var(--duration) / 2)
+        var(--ease),
+      opacity calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
+  }
+}
