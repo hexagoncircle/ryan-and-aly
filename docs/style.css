@@ -24,9 +24,6 @@
   --color-secondary-offset: hsl(0, 0%, 18%);
   --color-highlight: yellow; }
 
-.no-js {
-  --duration: 0s; }
-
 *,
 *::before,
 *::after {
@@ -43,6 +40,9 @@ body {
   font-size: clamp(1.15rem, 1.25vw, 1.5rem);
   line-height: 1.75;
   margin-bottom: var(--space-lg); }
+
+[hidden] {
+  display: none; }
 
 .u-flow > * + * {
   margin-top: var(--space-sm); }
@@ -528,6 +528,9 @@ a[href] {
   .thermostat-knob:active {
     cursor: -webkit-grabbing;
     cursor: grabbing; }
+
+.temperature-guess {
+  margin-bottom: var(--space-sm); }
 
 .skull-outline {
   -webkit-transform: translate(-2%, -2%);
