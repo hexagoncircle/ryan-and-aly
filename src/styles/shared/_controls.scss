@@ -1,0 +1,72 @@
+// Controls
+a[href],
+button,
+input {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible,
+  &:focus-visible + label {
+    outline: 2px dashed var(--color-highlight);
+    outline-offset: 3px;
+  }
+}
+
+a[href] {
+  color: var(--color-primary);
+}
+
+.button {
+  padding: var(--space-xs) var(--space);
+  font-family: var(--font-heading);
+  font-size: inherit;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  border: none;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.mode-switch + label {
+  --switch-size: 8px;
+  --border-size: 2px;
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  display: inline-block;
+  border: var(--border-size) solid var(--color-primary);
+  width: calc(var(--switch-size) * 4);
+  z-index: 1;
+  cursor: pointer;
+
+  &::before {
+    --padding: var(--space);
+    content: "";
+    position: absolute;
+    top: calc(var(--padding) / -2);
+    left: calc(var(--padding) / -2);
+    width: calc(100% + var(--padding));
+    height: calc(100% + var(--padding));
+  }
+
+  &::after {
+    content: "";
+    position: relative;
+    display: block;
+    width: 50%;
+    height: var(--switch-size);
+    background-color: var(--color-primary);
+    border: var(--border-size) solid var(--color-secondary);
+    transform: translateX(100%);
+    transition: transform calc(var(--duration) / 2) var(--ease);
+  }
+}
+
+.mode-switch:checked + label::after {
+  transform: translateX(0);
+}

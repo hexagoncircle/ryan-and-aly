@@ -13,6 +13,7 @@ const temperatureGuessValue = document.getElementById(
 const temperatureGuessCookieName = "temperatureGuess";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
+const apiDomain = "https://api.surveyjs.io/public/v1/Survey/";
 let skullActiveExpression = skull.dataset.expression;
 
 const hasVoted = () => {
@@ -92,12 +93,21 @@ const handleThermostatUpdate = (value) => {
   setThermostatProgress((value / 360) * 100);
 };
 
-const submitTemperatureValue = () => {
+const fetchTemperatureGuessResults = () => {
+  fetch(
+    // `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
+    "./mockResults.json"
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+};
+
+const submitTemperatureGuess = () => {
   if (hasVoted()) {
     return;
   }
 
-  fetch("https://api.surveyjs.io/public/v1/Survey/post/", {
+  fetch(`${apiDomain}/post`, {
     method: "post",
     headers: {
       "Content-type": "application/json; charset=utf-8",
@@ -159,6 +169,6 @@ window.addEventListener("keypress", (e) => {
 });
 
 displayModeSwitch.addEventListener("click", setSiteDisplayMode);
-thermostatButton.addEventListener("click", submitTemperatureValue);
+thermostatButton.addEventListener("click", fetchTemperatureGuessResults);
 
 init();

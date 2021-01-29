@@ -35,25 +35,41 @@
       "src": [
         "**/*.template.html"
       ],
+      "pipe": [
+        {
+          "require": "gulp-inject-partials",
+          "args": [
+            {
+              "removeTags": true,
+              "quiet": true,
+              "ignoreError": true
+            }
+          ]
+        }
+      ],
       "rename": {
         "find": ".template",
         "replace": ""
       },
       "cleanup": [
+        "**/*.partial.html",
         "**/*.template.html"
       ]
     },
     "sass": {
       "src": [
-        "**/*.sass",
-        "**/*.scss"
+        "./styles/**/*.scss"
       ],
       "pipe": [
         {
-          "require": "gulp-sass"
+          "require": "gulp-sass",
+          "dest": "./"
         }
       ],
-      "cleanup": true
+      "cleanup": [
+        "./styles/",
+        "**/*.scss"
+      ]
     },
     "autoprefixer": {
       "order": 999,

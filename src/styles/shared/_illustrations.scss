@@ -1,0 +1,53 @@
+// Illustrations
+.svg {
+  fill: var(--color-primary);
+}
+
+.svg-tree-right,
+.svg-tree-left,
+.svg-desert-right,
+.svg-desert-left,
+.svg-stars {
+  max-width: 25vw;
+  pointer-events: none;
+
+  @media (max-width: $bp-sm - 1) {
+    min-width: 250px;
+  }
+}
+
+.svg-stars > * {
+  opacity: 0;
+  transform: translateY(1rem);
+
+  [data-mode="dark"] & {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform calc(var(--duration) * 4) calc(var(--duration) / 2)
+        var(--ease),
+      opacity calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
+  }
+}
+
+.svg-desert-right {
+  transform: translate3d(4%, 10%, 0);
+}
+
+.svg-desert-left {
+  transform: translate3d(-3%, 15%, 0);
+}
+
+.svg-desert-right,
+.svg-desert-left {
+  [data-mode="dark"] & {
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  [data-mode="light"] & {
+    filter: blur(0.1px);
+    transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2)
+        var(--ease),
+      opacity calc(var(--duration) * 4) var(--ease);
+  }
+}

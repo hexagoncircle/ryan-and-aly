@@ -1,0 +1,70 @@
+// Breakpoints
+$bp-sm: 600px;
+$bp-md: 900px;
+
+// Variables
+:root,
+[data-mode="light"] {
+  --color-primary: hsl(38, 100%, 37%);
+  --color-primary-offset: hsl(38, 70%, 60%);
+  --color-secondary: hsl(44, 31%, 93%);
+  --color-secondary-offset: hsl(44, 31%, 83%);
+  --color-highlight: dodgerblue;
+
+  --font-primary: "stratos", sans-serif;
+  --font-heading: "moret", serif;
+  --font-display: "lust", serif;
+
+  --space: clamp(2rem, 2vw, 2.5rem);
+  --space-xxs: calc(var(--space) / 3);
+  --space-xs: calc(var(--space) / 2);
+  --space-sm: calc(var(--space) / 1.5);
+  --space-md: calc(var(--space) * 2);
+  --space-lg: calc(var(--space) * 3);
+
+  --duration: 400ms;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-mode="dark"] {
+  --color-primary: hsl(0, 0%, 92%);
+  --color-primary-offset: hsl(0, 0%, 63%);
+  --color-secondary: hsl(0, 0%, 8%);
+  --color-secondary-offset: hsl(0, 0%, 18%);
+  --color-highlight: yellow;
+}
+
+// Globals
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
+  font-family: var(--font-primary);
+  font-size: clamp(1.15rem, 1.25vw, 1.5rem);
+  line-height: 1.75;
+  margin-bottom: var(--space-lg);
+}
+
+[hidden] {
+  display: none;
+}
+
+// Reduced motion
+@media (prefers-reduced-motion) {
+  :root {
+    --duration: 0.01s;
+  }
+
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
