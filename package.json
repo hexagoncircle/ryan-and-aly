@@ -68,6 +68,7 @@
       ],
       "cleanup": [
         "./styles/",
+        "./shared/",
         "**/*.scss"
       ]
     },

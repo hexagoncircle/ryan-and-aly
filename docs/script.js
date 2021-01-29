@@ -93,6 +93,7 @@ const handleThermostatUpdate = (value) => {
   setThermostatProgress((value / 360) * 100);
 };
 
+/** Todo: Fetch real data once feature-complete */
 const fetchTemperatureGuessResults = () => {
   fetch(
     // `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
