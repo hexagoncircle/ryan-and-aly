@@ -12,7 +12,7 @@
 
   <div class="thermostat">
     <svg
-      class="svg thermostat-range"
+      class="svg thermostat-range thermostat-base-group"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -20,7 +20,7 @@
       <circle class="thermostat-fill" cx="50" cy="50" r="50" />
     </svg>
 
-    <div class="svg thermostat-control">
+    <div class="svg thermostat-control thermostat-base-group">
       <svg
         class="svg svg-thermostat"
         viewBox="0 0 100 100"
@@ -33,7 +33,7 @@
     <div class="thermostat-content">
       <div class="svg-wrapper">
         <svg
-          class="svg svg-stars"
+          class="svg svg-stars thermostat-base-group"
           viewBox="0 0 298 61"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -146,14 +146,20 @@
         </svg>
       </div>
 
-      <div class="thermostat-temp">
+      <div class="thermostat-temp thermostat-base-group">
         <span class="thermostat-number">80</span> °F
       </div>
 
-      <div id="temperature-guess-text" class="temperature-guess" hidden>
-        You guessed <span id="temperature-guess-value">90</span> °F
+      <button
+        id="submit-temperature"
+        class="button button--primary thermostat-base-group"
+      >
+        Submit this guess
+      </button>
+      <div id="temperature-actions" class="temperature-actions">
+        Switch to Celsius
       </div>
-      <button id="submit-temperature" class="button">Submit this guess</button>
+      <ol id="temperature-results" class="temperature-results-list"></ol>
     </div>
   </div>
 </article>

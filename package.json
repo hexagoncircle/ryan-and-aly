@@ -52,6 +52,7 @@
         "replace": ""
       },
       "cleanup": [
+        "./partials",
         "**/*.partial.html",
         "**/*.template.html"
       ]
@@ -68,7 +69,6 @@
       ],
       "cleanup": [
         "./styles/",
-        "./shared/",
         "**/*.scss"
       ]
     },

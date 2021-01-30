@@ -1,4 +1,4 @@
-// Controls
+// Focus styles
 a[href],
 button,
 input {
@@ -13,11 +13,27 @@ input {
   }
 }
 
+// Anchor links
 a[href] {
   color: var(--color-primary);
 }
 
+// Buttons
 .button {
+  appearance: none;
+  border: none;
+  color: var(--color-primary);
+  background-color: transparent;
+  font-family: var(--font-heading);
+  font-size: inherit;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.button--primary {
   padding: var(--space-xs) var(--space);
   font-family: var(--font-heading);
   font-size: inherit;
@@ -26,12 +42,17 @@ a[href] {
   background-color: var(--color-primary);
   border: none;
   cursor: pointer;
-
-  &:active {
-    transform: translateY(1px);
-  }
 }
 
+.button--text {
+  padding: 0 var(--space-xxs);
+  font-family: var(--font-heading);
+  font-size: 1.25em;
+  line-height: 1.4;
+  text-decoration: underline;
+}
+
+// Mode Switch
 .mode-switch + label {
   --switch-size: 8px;
   --border-size: 2px;
@@ -69,4 +90,32 @@ a[href] {
 
 .mode-switch:checked + label::after {
   transform: translateX(0);
+}
+
+// Progress Bars
+progress {
+  width: 100%;
+  appearance: none;
+  border: none;
+  background-color: var(--color-secondary-offset);
+  border-radius: 360px;
+  height: 8px;
+}
+
+progress::-webkit-progress-bar {
+  appearance: none;
+  background-color: var(--color-secondary-offset);
+  border-radius: 360px;
+}
+
+progress::-moz-progress-bar {
+  appearance: none;
+  background-color: var(--color-primary);
+  border-radius: 360px;
+}
+
+progress::-webkit-progress-value {
+  appearance: none;
+  background-color: var(--color-primary);
+  border-radius: 360px;
 }

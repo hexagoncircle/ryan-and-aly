@@ -83,8 +83,11 @@
 }
 
 .thermostat-content {
+  width: 100%;
+  max-width: 470px;
   text-align: center;
   margin-bottom: var(--space-xs);
+  transform: translate3d(0, 0, 0);
 
   .button {
     position: relative;
@@ -135,6 +138,8 @@
   transform-origin: center;
   transform: rotate(0.5turn);
   stroke: var(--color-primary);
+  stroke-dasharray: 314.159, 314.159;
+  stroke-dashoffset: 274.889;
 }
 
 .thermostat-knob {
@@ -146,10 +151,6 @@
   &:active {
     cursor: grabbing;
   }
-}
-
-.temperature-guess {
-  margin-bottom: var(--space-sm);
 }
 
 // Skull
@@ -207,226 +208,89 @@
   visibility: visible;
 }
 
-@keyframes temperature-change {
-  20% {
-    transform: translateY(-3rem);
-  }
-  40% {
-    transform: translateY(0.5rem) rotate(-5deg);
-  }
-  60% {
-    transform: translateY(-0.75rem) rotate(5deg);
-  }
-  80% {
-    transform: translateY(0.25rem);
-  }
-} // Temperature
-#guess-the-temp {
+// Temperature actions
+.temperature-actions {
   display: grid;
-  grid-gap: var(--space-md);
-  justify-items: center;
-  overflow: hidden;
-  max-width: 2000px;
-  margin: 0 auto;
+  grid-template-columns: 1fr auto 1fr;
+  grid-gap: var(--space-xxs);
+  align-items: center;
+  position: relative;
+  margin-top: var(--space-sm);
 
-  @media (min-width: $bp-md) {
-    grid-template-columns: 1fr 1fr;
+  &::before,
+  &::after {
+    --border-width: 2px;
+    content: "";
+    height: calc(var(--border-width) * 3);
+    border-top: var(--border-width) solid var(--color-secondary-offset);
+    border-bottom: var(--border-width) solid var(--color-secondary-offset);
+    z-index: -1;
   }
+}
+
+// Temperature results
+.temperature-results-list {
+  margin: var(--space) auto -100px;
+}
+
+.temperature-result {
+  display: grid;
+  grid-gap: var(--space-xxs);
+  color: var(--color-primary-offset);
+  margin: var(--space-xxs) 0;
 
   .heading {
-    @media (max-width: $bp-md - 1) {
-      margin-top: 0;
+    color: var(--color-primary);
+  }
+
+  .value {
+    text-align: left;
+    font-feature-settings: "tnum";
+  }
+
+  .votes {
+    text-align: right;
+    font-feature-settings: "tnum";
+  }
+
+  &:not(.top-result) {
+    grid-template-areas: "value bar votes";
+    grid-template-columns: 4ch 1fr auto;
+    align-items: center;
+
+    .votes {
+      grid-area: votes;
+    }
+
+    .bar {
+      grid-area: bar;
+      height: 6px;
     }
   }
 
-  .section {
-    text-align: center;
-    max-width: 50ch;
+  &.top-result {
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
+    margin-bottom: var(--space-sm);
 
-    @media (min-width: $bp-md) {
-      text-align: left;
+    .bar {
+      grid-column: 1 / -1;
     }
-  }
-
-  .svg {
-    overflow: visible;
-    fill: none;
-  }
-
-  .svg-skull {
-    margin-top: var(--space-md);
-    width: clamp(100px, 8vw, 160px);
-  }
-
-  .svg-stars {
-    margin-top: var(--space-md);
-    fill: var(--color-primary);
-    width: clamp(200px, 20vw, 300px);
-    max-width: 100%;
   }
 }
 
-// Thermostat
-.thermostat {
-  position: relative;
+.secondary-results {
   display: grid;
-  align-items: start;
-  justify-items: center;
-  width: 100%;
-  max-width: 500px;
-  padding-top: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  align-items: center;
+  grid-gap: var(--space-xxs) 10%;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 3px solid var(--color-secondary-offset);
 
-  @media (min-width: $bp-md) {
-    max-width: 40vw;
+  .temperature-result {
+    margin: unset;
   }
-
-  > * {
-    grid-area: 1 / -1;
-  }
-}
-
-.thermostat-range,
-.thermostat-control,
-.svg-thermostat {
-  max-width: 600px;
-}
-
-.thermostat-range,
-.thermostat-control {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-}
-
-.svg-thermostat {
-  touch-action: manipulation !important;
-}
-
-.thermostat-content {
-  text-align: center;
-  margin-bottom: var(--space-xs);
-
-  .button {
-    position: relative;
-    z-index: 1;
-  }
-
-  .svg-wrapper {
-    display: grid;
-    place-items: center;
-    pointer-events: none;
-
-    > * {
-      grid-area: 1 / -1;
-    }
-  }
-}
-
-.thermostat-temp {
-  font-family: var(--font-heading);
-  font-size: clamp(4rem, 6vw, 6rem);
-}
-
-.thermostat-control {
-  width: 100%;
-
-  > * {
-    position: absolute;
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-  }
-}
-
-.thermostat-ring,
-.thermostat-fill {
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-.thermostat-ring {
-  stroke: var(--color-secondary-offset);
-}
-
-.thermostat-fill {
-  transform-origin: center;
-  transform: rotate(0.5turn);
-  stroke: var(--color-primary);
-}
-
-.thermostat-knob {
-  fill: var(--color-primary);
-  cursor: grab;
-  stroke: transparent;
-  stroke-width: 6;
-
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-.temperature-guess {
-  margin-bottom: var(--space-sm);
-}
-
-// Skull
-.skull-outline {
-  transform: translate(-2%, -2%);
-}
-
-[data-mode="light"] {
-  .skull {
-    visibility: hidden;
-  }
-
-  .skull-color-primary {
-    fill: var(--color-primary);
-  }
-
-  .skull-color-secondary {
-    fill: var(--color-primary);
-  }
-
-  .skull-color-accent {
-    fill: var(--color-secondary);
-  }
-}
-
-[data-mode="dark"] {
-  .skull-outline {
-    visibility: hidden;
-  }
-
-  .skull-color-primary {
-    fill: var(--color-primary);
-  }
-
-  .skull-color-secondary {
-    fill: var(--color-secondary);
-  }
-
-  .skull-color-accent {
-    fill: var(--color-primary);
-  }
-}
-
-.svg-skull.is-animating {
-  animation: temperature-change var(--duration) var(--ease);
-}
-
-.expression {
-  visibility: hidden;
-}
-
-[data-expression="1"] .expression-1,
-[data-expression="2"] .expression-2,
-[data-expression="3"] .expression-3 {
-  visibility: visible;
 }
 
 @keyframes temperature-change {
