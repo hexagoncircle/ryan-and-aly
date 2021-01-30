@@ -356,7 +356,14 @@ progress::-webkit-progress-value {
   max-width: 1500px; }
   #playlist .svg {
     margin: 0 auto var(--space);
-    max-width: 200px; }
+    max-width: clamp(250px, 15vw, 350px);
+    fill: var(--color-primary); }
+  #playlist .svg-disco-ball-alt {
+    display: none; }
+  [data-mode="dark"] #playlist .svg-disco-ball {
+    display: none; }
+  [data-mode="dark"] #playlist .svg-disco-ball-alt {
+    display: block; }
   #playlist .section {
     max-width: 80ch;
     margin-left: auto;
@@ -487,7 +494,7 @@ progress::-webkit-progress-value {
     fill: none; }
   #guess-the-temp .svg-skull {
     margin-top: var(--space-md);
-    width: clamp(100px, 8vw, 160px); }
+    width: clamp(100px, 8vw, 150px); }
   #guess-the-temp .svg-stars {
     margin-top: var(--space-md);
     fill: var(--color-primary);
@@ -525,6 +532,11 @@ progress::-webkit-progress-value {
   .thermostat > * {
     grid-area: 1 / -1; }
 
+.thermostat-control-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
 .thermostat-range,
 .thermostat-control,
 .svg-thermostat {
@@ -543,7 +555,6 @@ progress::-webkit-progress-value {
   touch-action: manipulation !important; }
 
 .thermostat-content {
-  margin-bottom: var(--space-xs);
   width: 100%;
   max-width: 470px;
   text-align: center;
@@ -556,7 +567,8 @@ progress::-webkit-progress-value {
     pointer-events: initial; }
   .thermostat-content .svg-wrapper {
     display: grid;
-    place-items: center; }
+    place-items: center;
+    margin-bottom: var(--space); }
     .thermostat-content .svg-wrapper > * {
       grid-area: 1 / -1; }
 
@@ -660,7 +672,7 @@ progress::-webkit-progress-value {
   -ms-flex-align: center;
   align-items: center;
   position: relative;
-  margin-top: var(--space-sm); }
+  margin-top: var(--space); }
   .temperature-actions::before, .temperature-actions::after {
     --border-width: 2px;
     content: "";
@@ -670,9 +682,12 @@ progress::-webkit-progress-value {
     z-index: -1; }
 
 .temperature-results-list {
-  margin: var(--space) auto 0; }
-  .temperature-results-list.is-active {
-    margin-bottom: -140px; }
+  margin: var(--space) auto 0;
+  height: 0; }
+
+.secondary-results {
+  height: 0;
+  opacity: 0; }
 
 .temperature-result {
   display: grid;

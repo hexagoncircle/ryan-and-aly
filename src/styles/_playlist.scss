@@ -4,7 +4,22 @@
 
   .svg {
     margin: 0 auto var(--space);
-    max-width: 200px;
+    max-width: clamp(250px, 15vw, 350px);
+    fill: var(--color-primary);
+  }
+
+  .svg-disco-ball-alt {
+    display: none;
+  }
+
+  [data-mode="dark"] & {
+    .svg-disco-ball {
+      display: none;
+    }
+
+    .svg-disco-ball-alt {
+      display: block;
+    }
   }
 
   .section {

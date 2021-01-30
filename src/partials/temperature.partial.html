@@ -11,23 +11,25 @@
   </section>
 
   <div class="thermostat">
-    <svg
-      class="svg thermostat-range thermostat-base-group"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path class="thermostat-ring" d="M 0 50 A 50 50 100 0 1 100 50"></path>
-      <circle class="thermostat-fill" cx="50" cy="50" r="50" />
-    </svg>
-
-    <div class="svg thermostat-control thermostat-base-group">
+    <div class="thermostat-control-wrapper thermostat-base-group">
       <svg
-        class="svg svg-thermostat"
+        class="svg thermostat-range"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle class="thermostat-knob" cy="50" r="3" />
+        <path class="thermostat-ring" d="M 0 50 A 50 50 100 0 1 100 50"></path>
+        <circle class="thermostat-fill" cx="50" cy="50" r="50" />
       </svg>
+
+      <div class="svg thermostat-control">
+        <svg
+          class="svg svg-thermostat"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle class="thermostat-knob" cy="50" r="3" />
+        </svg>
+      </div>
     </div>
 
     <div class="thermostat-content">
@@ -159,7 +161,7 @@
         <div class="thermostat-temp-text">
           <span class="thermostat-number">80</span>°F
         </div>
-        <span class="thermostat-related-count">&nbsp;</span>
+        <span class="thermostat-related-count">-</span>
       </div>
 
       <button

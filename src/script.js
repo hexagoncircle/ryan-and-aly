@@ -21,8 +21,6 @@ const skull = document.querySelector(".svg-skull");
 let skullActiveExpression = skull.dataset.expression;
 let currentGuess = 80;
 
-const toPlural = (singular, plural, count) => (count > 1 ? plural : singular);
-
 const setSiteDisplayMode = () => {
   document.body.dataset.mode = displayModeSwitch.checked ? "dark" : "light";
 };
@@ -94,9 +92,13 @@ const setThermostatButtonText = () => {
 };
 
 const setThermostatRelatedCountText = (count) => {
-  thermostatRelatedCount.textContent = `
-    ${count} ${toPlural("person", "people", count)} guessed
-  `;
+  if (count > 1) {
+    thermostatRelatedCount.textContent = `${count} others guessed`;
+  } else if (count === 1) {
+    thermostatRelatedCount.textContent = `1 other guessed`;
+  } else {
+    thermostatRelatedCount.textContent = `You guessed it first!`;
+  }
 };
 
 const setThermostatNumber = (value) => {
@@ -170,9 +172,9 @@ const renderTemperaturePrimaryResults = (results) => {
     .staggerFromTo(
       ".temperature-result",
       1,
-      { y: -120, opacity: 0 },
+      { y: 40, opacity: 0 },
       {
-        y: -160,
+        y: 0,
         opacity: 1,
         duration: 0.2,
         ease: "power4.out",
@@ -182,9 +184,8 @@ const renderTemperaturePrimaryResults = (results) => {
     )
     .fromTo(
       "#show-all-results",
-      { y: -160, opacity: 0 },
+      { opacity: 0 },
       {
-        y: -160,
         opacity: 1,
         duration: 1,
         ease: "power4.out",
@@ -205,16 +206,12 @@ const renderTemperatureSecondaryResults = (results) => {
   );
 
   temperatureResultsTimeline
-    .fromTo(
-      ".secondary-results",
-      { y: -160, opacity: 0 },
-      {
-        y: -160,
-        opacity: 1,
-        duration: 0.4,
-        ease: "power4.out",
-      }
-    )
+    .to(".secondary-results", {
+      opacity: 1,
+      height: "auto",
+      duration: 0.4,
+      ease: "power4.out",
+    })
     .resume();
 };
 
@@ -247,7 +244,6 @@ const fetchTemperatureResults = () => {
   )
     .then((response) => response.json())
     .then((data) => {
-      temperatureResults.classList.add("is-active");
       setTemperatureResults(data.QuestionResult, data.AnswersCount);
       getTemperatureRelatedCount(data.QuestionResult);
     });
@@ -279,9 +275,20 @@ const temperatureResultsTimeline = gsap
   .timeline({ paused: true })
   .to(".thermostat-base-group", {
     opacity: 0,
+    scale: 0.96,
     duration: 0.5,
     ease: "power4.out",
   })
+  .to(
+    ".temperature-results-list",
+    {
+      height: "auto",
+      marginBottom: -160,
+      duration: 0.5,
+      ease: "power4.out",
+    },
+    "<"
+  )
   .to(
     ".svg-skull",
     {
@@ -302,8 +309,8 @@ const temperatureResultsTimeline = gsap
     ".thermostat-temp",
     {
       x: "20%",
-      y: "-95%",
-      scale: 0.9,
+      y: "-110%",
+      scale: 0.8,
       duration: 0.5,
       ease: "power4.out",
     },
@@ -337,7 +344,16 @@ const temperatureResultsTimeline = gsap
   .to(
     ".temperature-actions",
     {
-      y: -140,
+      y: -180,
+      duration: 0.6,
+      ease: "power4.out",
+    },
+    "<"
+  )
+  .to(
+    ".temperature-results-list",
+    {
+      y: -200,
       duration: 0.6,
       ease: "power4.out",
     },
