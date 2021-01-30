@@ -3,10 +3,12 @@ const thermostatControl = document.querySelector(".thermostat-control");
 const thermostatFill = document.querySelector(".thermostat-fill");
 const thermostatKnob = document.querySelector(".thermostat-knob");
 const thermostatNumber = document.querySelector(".thermostat-number");
+const thermostatRelatedCount = document.querySelector(
+  ".thermostat-related-count"
+);
 const thermostatRingRadius = thermostatFill.r.baseVal.value;
 const thermostatRingCirc = thermostatRingRadius * 2 * Math.PI;
 
-const temperatureGuessText = document.getElementById("temperature-actions");
 const temperatureGuessValue = document.getElementById("temperature-actions");
 const temperatureResults = document.getElementById("temperature-results");
 const temperatureResultsTemplate = { primary: "", secondary: "" };
@@ -17,6 +19,9 @@ const apiDomain = "https://api.surveyjs.io/public/v1/Survey/";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
 let skullActiveExpression = skull.dataset.expression;
+let currentGuess = 80;
+
+const toPlural = (singular, plural, count) => (count > 1 ? plural : singular);
 
 const setSiteDisplayMode = () => {
   document.body.dataset.mode = displayModeSwitch.checked ? "dark" : "light";
@@ -32,12 +37,13 @@ const hasVoted = () => {
 
 // Event Handlers
 const handleThermostatUpdate = (value) => {
-  setThermostatNumberDisplay(getTemperature(value));
+  setThermostatNumber(getTemperature(value));
   setSkullExpression(getTemperature(value));
   setThermostatProgress((value / 360) * 100);
 };
 
 const handleThermostatButtonClick = () => {
+  thermostatButton.disabled = true;
   thermostatButton.removeEventListener("click", handleThermostatUpdate);
   fetchTemperatureResults();
 };
@@ -87,7 +93,14 @@ const setThermostatButtonText = () => {
     : "Submit this guess";
 };
 
-const setThermostatNumberDisplay = (value) => {
+const setThermostatRelatedCountText = (count) => {
+  thermostatRelatedCount.textContent = `
+    ${count} ${toPlural("person", "people", count)} guessed
+  `;
+};
+
+const setThermostatNumber = (value) => {
+  currentGuess = parseFloat(value.toFixed());
   thermostatNumber.textContent = parseFloat(value.toFixed());
 };
 
@@ -97,7 +110,7 @@ const setThermostatProgress = (percent) => {
 };
 
 // Temperature
-const getTemperatureGuess = () => {
+const getTemperatureGuessCookie = () => {
   const cookieValue = document.cookie
     .split("; ")
     .find((name) => name.startsWith(temperatureGuessCookieName))
@@ -109,6 +122,11 @@ const getTemperatureGuess = () => {
 const getTemperature = (value) => {
   const min = 85;
   return value / 9 + min;
+};
+
+const getTemperatureRelatedCount = (data) => {
+  const match = Object.entries(data).find((temp) => currentGuess == temp[0]);
+  return setThermostatRelatedCountText(match ? match[1] : 0);
 };
 
 const createTemperatureResult = ({ temperature, votes, total, index }) => {
@@ -229,7 +247,9 @@ const fetchTemperatureResults = () => {
   )
     .then((response) => response.json())
     .then((data) => {
+      temperatureResults.classList.add("is-active");
       setTemperatureResults(data.QuestionResult, data.AnswersCount);
+      getTemperatureRelatedCount(data.QuestionResult);
     });
 };
 
@@ -265,19 +285,55 @@ const temperatureResultsTimeline = gsap
   .to(
     ".svg-skull",
     {
-      x: -200,
-      rotation: -25,
+      x: "-140%",
+      rotation: -30,
       duration: 0.25,
       ease: "power2.out",
     },
     "-=0.25"
   )
   .to(".svg-skull", {
-    x: -150,
+    x: "-110%",
     rotation: 0,
     duration: 1,
-    ease: "elastic.out(1, 0.3)",
+    ease: "elastic.out(1.2, 0.4)",
   })
+  .to(
+    ".thermostat-temp",
+    {
+      x: "20%",
+      y: "-95%",
+      scale: 0.9,
+      duration: 0.5,
+      ease: "power4.out",
+    },
+    "-=1.25"
+  )
+  .fromTo(
+    ".svg-hot-take",
+    {
+      opacity: 0,
+      x: "-50%",
+      rotation: -30,
+    },
+    {
+      x: 0,
+      rotation: 0,
+      opacity: 1,
+      duration: 0.75,
+      ease: "elastic.out(0.6, 0.3)",
+    },
+    "-=1"
+  )
+  .to(
+    ".thermostat-related-count",
+    {
+      opacity: 1,
+      duration: 0.5,
+      ease: "power4.out",
+    },
+    "<"
+  )
   .to(
     ".temperature-actions",
     {
@@ -285,7 +341,7 @@ const temperatureResultsTimeline = gsap
       duration: 0.6,
       ease: "power4.out",
     },
-    "-=1.25"
+    "<"
   );
 
 gsap.set(thermostatControl, { rotation: 45 }).then(() => {
@@ -324,7 +380,7 @@ const init = () => {
 
   setSiteDisplayMode();
   setThermostatButtonText();
-  hasVoted() && getTemperatureGuess();
+  hasVoted() && getTemperatureGuessCookie();
 
   window.addEventListener("keypress", (e) => {
     if (e.code === "KeyM") {

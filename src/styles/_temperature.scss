@@ -41,6 +41,21 @@
     fill: var(--color-primary);
     width: clamp(200px, 20vw, 300px);
     max-width: 100%;
+    min-width: 0;
+  }
+
+  .svg-hot-take {
+    width: clamp(200px, 20vw, 250px);
+    max-width: 100%;
+    min-width: 0;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    fill: var(--color-primary);
+    opacity: 0;
+    transform-origin: center bottom;
   }
 }
 
@@ -83,21 +98,22 @@
 }
 
 .thermostat-content {
+  margin-bottom: var(--space-xs);
   width: 100%;
   max-width: 470px;
   text-align: center;
-  margin-bottom: var(--space-xs);
+  pointer-events: none;
   transform: translate3d(0, 0, 0);
 
   .button {
     position: relative;
     z-index: 1;
+    pointer-events: initial;
   }
 
   .svg-wrapper {
     display: grid;
     place-items: center;
-    pointer-events: none;
 
     > * {
       grid-area: 1 / -1;
@@ -106,8 +122,19 @@
 }
 
 .thermostat-temp {
+  position: relative;
+}
+
+.thermostat-temp-text {
   font-family: var(--font-heading);
   font-size: clamp(4rem, 6vw, 6rem);
+  line-height: 1;
+}
+
+.thermostat-related-count {
+  opacity: 0;
+  margin-top: var(--space-xxs);
+  color: var(--color-primary-offset);
 }
 
 .thermostat-control {
@@ -230,7 +257,11 @@
 
 // Temperature results
 .temperature-results-list {
-  margin: var(--space) auto -100px;
+  margin: var(--space) auto 0;
+
+  &.is-active {
+    margin-bottom: -140px;
+  }
 }
 
 .temperature-result {
