@@ -24,36 +24,40 @@
 .donation-list {
   display: grid;
   grid-gap: var(--space);
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: 1fr 1fr;
   place-items: center;
   margin-top: var(--space);
 
+  @media (min-width: $bp-sm) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
   a {
+    position: relative;
     display: flex;
     padding: var(--space-xxs);
   }
+}
 
-  img {
-    position: relative;
-    display: inline-block;
-    vertical-align: baseline;
-    width: 100%;
-    max-width: 150px;
-  }
+.svg-logo {
+  position: relative;
+  fill: var(--color-primary);
+  width: 100%;
+  max-width: 150px;
 
-  img[src*="cw"] {
+  [href*="cw"] & {
     max-width: 120px;
   }
 
-  img[src*="aclu"] {
+  [href*="aclu"] & {
     max-width: 90px;
   }
 
-  img[src*="thorn"] {
-    top: -0.25em;
+  [href*="joyrides"] & {
+    top: 0.15em;
   }
 
-  img[src*="joyrides"] {
-    top: 0.15em;
+  [href*="thorn"] & {
+    top: -0.25em;
   }
 }

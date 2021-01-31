@@ -100,12 +100,35 @@ body {
     .svg-stars {
       min-width: 250px; } }
 
-.svg-stars > * {
+.svg-desert-right {
+  -webkit-transform: translate3d(4%, 10%, 0);
+  transform: translate3d(4%, 10%, 0); }
+
+.svg-desert-left {
+  -webkit-transform: translate3d(-3%, 15%, 0);
+  transform: translate3d(-3%, 15%, 0); }
+
+.svg-anim--light {
+  opacity: 1;
+  -webkit-filter: blur(0.1px);
+  filter: blur(0.1px); }
+  [data-mode="dark"] .svg-anim--light {
+    opacity: 0;
+    -webkit-filter: blur(5px);
+    filter: blur(5px); }
+  [data-mode="light"] .svg-anim--light {
+    -webkit-transition: opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
+    transition: opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
+    -o-transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease);
+    transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease);
+    transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease); }
+
+.svg-anim--dark > * {
   opacity: 0;
   -webkit-transform: translateY(1rem);
   -ms-transform: translateY(1rem);
   transform: translateY(1rem); }
-  [data-mode="dark"] .svg-stars > * {
+  [data-mode="dark"] .svg-anim--dark > * {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
     transform: translateY(0);
@@ -115,30 +138,6 @@ body {
     -o-transition: transform calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
     transition: transform calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
     transition: transform calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), -webkit-transform calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease); }
-
-.svg-desert-right {
-  -webkit-transform: translate3d(4%, 10%, 0);
-  transform: translate3d(4%, 10%, 0); }
-
-.svg-desert-left {
-  -webkit-transform: translate3d(-3%, 15%, 0);
-  transform: translate3d(-3%, 15%, 0); }
-
-[data-mode="dark"] .svg-desert-right, [data-mode="dark"]
-.svg-desert-left {
-  opacity: 0;
-  -webkit-filter: blur(5px);
-  filter: blur(5px); }
-
-[data-mode="light"] .svg-desert-right, [data-mode="light"]
-.svg-desert-left {
-  -webkit-filter: blur(0.1px);
-  filter: blur(0.1px);
-  -webkit-transition: opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
-  transition: opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease);
-  -o-transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease);
-  transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease);
-  transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease), opacity calc(var(--duration) * 4) var(--ease), -webkit-filter calc(var(--duration) * 4) calc(var(--duration) / 2) var(--ease); }
 
 a[href]:focus,
 button:focus,
@@ -355,28 +354,32 @@ progress::-webkit-progress-value {
 .donation-list {
   display: grid;
   grid-gap: var(--space);
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: 1fr 1fr;
   place-items: center;
   margin-top: var(--space); }
+  @media (min-width: 600px) {
+    .donation-list {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
   .donation-list a {
+    position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     padding: var(--space-xxs); }
-  .donation-list img {
-    position: relative;
-    display: inline-block;
-    vertical-align: baseline;
-    width: 100%;
-    max-width: 150px; }
-  .donation-list img[src*="cw"] {
+
+.svg-logo {
+  position: relative;
+  fill: var(--color-primary);
+  width: 100%;
+  max-width: 150px; }
+  [href*="cw"] .svg-logo {
     max-width: 120px; }
-  .donation-list img[src*="aclu"] {
+  [href*="aclu"] .svg-logo {
     max-width: 90px; }
-  .donation-list img[src*="thorn"] {
-    top: -0.25em; }
-  .donation-list img[src*="joyrides"] {
+  [href*="joyrides"] .svg-logo {
     top: 0.15em; }
+  [href*="thorn"] .svg-logo {
+    top: -0.25em; }
 
 #playlist {
   max-width: 1500px; }
@@ -521,12 +524,15 @@ progress::-webkit-progress-value {
   #guess-the-temp .svg-skull {
     margin-top: var(--space-md);
     width: clamp(100px, 9vw, 150px); }
-  #guess-the-temp .svg-stars {
+  #guess-the-temp .svg-skull-stars,
+  #guess-the-temp .svg-skull-lines {
     margin-top: var(--space-md);
     fill: var(--color-primary);
     width: clamp(200px, 20vw, 300px);
     max-width: 100%;
     min-width: 0; }
+  #guess-the-temp .svg-skull-lines {
+    width: clamp(250px, 20vw, 350px); }
   #guess-the-temp .svg-hot-take {
     width: clamp(180px, 20vw, 250px);
     max-width: 100%;
@@ -590,7 +596,10 @@ progress::-webkit-progress-value {
   .thermostat-content .button {
     position: relative;
     z-index: 1;
-    pointer-events: initial; }
+    pointer-events: initial;
+    -webkit-transform: translateY(-10%);
+    -ms-transform: translateY(-10%);
+    transform: translateY(-10%); }
   .thermostat-content .svg-wrapper {
     display: grid;
     place-items: center;

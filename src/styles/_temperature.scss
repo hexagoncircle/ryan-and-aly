@@ -36,12 +36,17 @@
     width: clamp(100px, 9vw, 150px);
   }
 
-  .svg-stars {
+  .svg-skull-stars,
+  .svg-skull-lines {
     margin-top: var(--space-md);
     fill: var(--color-primary);
     width: clamp(200px, 20vw, 300px);
     max-width: 100%;
     min-width: 0;
+  }
+
+  .svg-skull-lines {
+    width: clamp(250px, 20vw, 350px);
   }
 
   .svg-hot-take {
@@ -114,6 +119,7 @@
     position: relative;
     z-index: 1;
     pointer-events: initial;
+    transform: translateY(-10%);
   }
 
   .svg-wrapper {
