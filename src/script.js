@@ -1,3 +1,4 @@
+const thermostat = document.querySelector(".thermostat");
 const thermostatButton = document.getElementById("submit-temperature");
 const thermostatControl = document.querySelector(".thermostat-control");
 const thermostatFill = document.querySelector(".thermostat-fill");
@@ -9,32 +10,78 @@ const thermostatRelatedCount = document.querySelector(
 const thermostatRingRadius = thermostatFill.r.baseVal.value;
 const thermostatRingCirc = thermostatRingRadius * 2 * Math.PI;
 
-const temperatureGuessValue = document.getElementById("temperature-actions");
+const temperatureText = document.querySelector(".thermostat-temp-text");
 const temperatureResults = document.getElementById("temperature-results");
 const temperatureResultsTemplate = { primary: "", secondary: "" };
-const temperatureGuessCookieName = "temperatureGuess";
 
 const displayModeSwitch = document.getElementById("mode-switch");
 const apiDomain = "https://api.surveyjs.io/public/v1/Survey/";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
+
+const hasCookieClassName = "has-cookie";
+const cookieName = {
+  guess: "temperatureGuess",
+  angle: "temperatureAngle",
+};
+
 let skullActiveExpression = skull.dataset.expression;
-let currentGuess = 80;
+let hasGuessed = false;
+let currentGuess, currentAngle;
 
 const setSiteDisplayMode = () => {
   document.body.dataset.mode = displayModeSwitch.checked ? "dark" : "light";
 };
 
-const hasVoted = () => {
+/**
+ * Temperature cookies
+ */
+const checkCookie = () => {
   const cookieExists = document.cookie
     .split(";")
-    .some((name) => name.trim().startsWith(temperatureGuessCookieName));
+    .some((name) => name.trim().startsWith(cookieName.angle));
 
   return cookieExists ? true : false;
 };
 
-// Event Handlers
+const getCookieValue = (value) => {
+  return document.cookie
+    .split("; ")
+    .find((name) => name.startsWith(value))
+    .split("=")[1];
+};
+
+const setCookies = () => {
+  document.cookie = `${cookieName.guess}=${currentGuess}`;
+  document.cookie = `${cookieName.angle}=${currentAngle}`;
+};
+
+const insertPreviousGuessText = () => {
+  temperatureText.insertAdjacentHTML(
+    "afterend",
+    `<span class="temperature-previous-guess">
+      You already guessed ${getCookieValue(cookieName.guess)}°
+    </span>`
+  );
+
+  temperatureResultsTimeline.to(
+    ".temperature-previous-guess",
+    {
+      height: 0,
+      opacity: 0,
+      duration: 0.2,
+    },
+    "-=1.5"
+  );
+};
+
+/**
+ * Event handlers
+ */
 const handleThermostatUpdate = (value) => {
+  currentAngle = value;
+  currentGuess = getTemperature(value);
+
   setThermostatNumber(getTemperature(value));
   setSkullExpression(getTemperature(value));
   setThermostatProgress((value / 360) * 100);
@@ -54,7 +101,9 @@ const handleShowAllResultsClick = (e) => {
   renderTemperatureSecondaryResults(temperatureResultsTemplate.secondary);
 };
 
-// Skull
+/**
+ * Skull
+ */
 const animateSkullExpression = () => {
   const className = "is-animating";
 
@@ -68,11 +117,9 @@ const animateSkullExpression = () => {
 };
 
 const setSkullExpression = (value) => {
-  const temperature = value.toFixed();
-
-  if (temperature < midTemp.min) {
+  if (value < midTemp.min) {
     skull.dataset.expression = 1;
-  } else if (temperature > midTemp.max) {
+  } else if (value > midTemp.max) {
     skull.dataset.expression = 3;
   } else {
     skull.dataset.expression = 2;
@@ -84,9 +131,11 @@ const setSkullExpression = (value) => {
   }
 };
 
-// Thermostat
+/**
+ * Thermostat
+ */
 const setThermostatButtonText = () => {
-  thermostatButton.textContent = hasVoted()
+  thermostatButton.textContent = hasGuessed
     ? "See the results"
     : "Submit this guess";
 };
@@ -102,8 +151,22 @@ const setThermostatRelatedCountText = (count) => {
 };
 
 const setThermostatNumber = (value) => {
-  currentGuess = parseFloat(value.toFixed());
-  thermostatNumber.textContent = parseFloat(value.toFixed());
+  thermostatNumber.textContent = value;
+
+  if (!hasGuessed) {
+    return;
+  }
+
+  if (value == getCookieValue(cookieName.guess)) {
+    if (thermostat.classList.contains(hasCookieClassName)) {
+      thermostat.classList.remove(hasCookieClassName);
+    }
+    return;
+  }
+
+  if (!thermostat.classList.contains(hasCookieClassName)) {
+    thermostat.classList.add(hasCookieClassName);
+  }
 };
 
 const setThermostatProgress = (percent) => {
@@ -111,19 +174,13 @@ const setThermostatProgress = (percent) => {
   thermostatFill.style.strokeDashoffset = offset;
 };
 
-// Temperature
-const getTemperatureGuessCookie = () => {
-  const cookieValue = document.cookie
-    .split("; ")
-    .find((name) => name.startsWith(temperatureGuessCookieName))
-    .split("=")[1];
-
-  temperatureGuessValue.textContent = `You guessed ${cookieValue} °F`;
-};
-
+/**
+ * Temperature
+ */
 const getTemperature = (value) => {
   const min = 85;
-  return value / 9 + min;
+  const threshold = 9;
+  return parseFloat(value / threshold + min).toFixed();
 };
 
 const getTemperatureRelatedCount = (data) => {
@@ -153,6 +210,9 @@ const createTemperatureResult = ({ temperature, votes, total, index }) => {
   `;
 };
 
+/**
+ * Temperature guess results
+ */
 const renderTemperaturePrimaryResults = (results) => {
   temperatureResults.insertAdjacentHTML(
     "afterbegin",
@@ -169,6 +229,7 @@ const renderTemperaturePrimaryResults = (results) => {
   });
 
   temperatureResultsTimeline
+    .resume()
     .staggerFromTo(
       ".temperature-result",
       1,
@@ -187,12 +248,11 @@ const renderTemperaturePrimaryResults = (results) => {
       { opacity: 0 },
       {
         opacity: 1,
-        duration: 1,
+        duration: 0.5,
         ease: "power4.out",
       },
       "-=0.5"
-    )
-    .resume();
+    );
 };
 
 const renderTemperatureSecondaryResults = (results) => {
@@ -205,14 +265,12 @@ const renderTemperatureSecondaryResults = (results) => {
   `
   );
 
-  temperatureResultsTimeline
-    .to(".secondary-results", {
-      opacity: 1,
-      height: "auto",
-      duration: 0.4,
-      ease: "power4.out",
-    })
-    .resume();
+  temperatureResultsTimeline.resume().to(".secondary-results", {
+    opacity: 1,
+    height: "auto",
+    duration: 0.4,
+    ease: "power4.out",
+  });
 };
 
 const setTemperatureResults = (results, total) => {
@@ -236,21 +294,11 @@ const setTemperatureResults = (results, total) => {
   renderTemperaturePrimaryResults(temperatureResultsTemplate.primary);
 };
 
-/** Todo: Fetch real data once feature-complete */
-const fetchTemperatureResults = () => {
-  fetch(
-    // `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
-    "./mockResults.json"
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      setTemperatureResults(data.QuestionResult, data.AnswersCount);
-      getTemperatureRelatedCount(data.QuestionResult);
-    });
-};
-
+/**
+ * Handle temperature data
+ */
 const sendTemperatureValue = () => {
-  if (hasVoted()) {
+  if (checkCookie()) {
     return;
   }
 
@@ -267,10 +315,33 @@ const sendTemperatureValue = () => {
     }),
   });
 
-  document.cookie = `${temperatureGuessCookieName}=${thermostatNumber.textContent}`;
+  setCookies();
 };
 
-// GSAP
+const fetchTemperatureResults = () => {
+  fetch(
+    // `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
+    "./mockResults.json"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (hasGuessed) {
+        gsap.set(thermostatControl, {
+          rotation: getCookieValue(cookieName.angle),
+        });
+        handleThermostatUpdate(getCookieValue(cookieName.angle));
+      } else {
+        setCookies();
+      }
+
+      setTemperatureResults(data.QuestionResult, data.AnswersCount);
+      getTemperatureRelatedCount(data.QuestionResult);
+    });
+};
+
+/**
+ * Results animation timeline
+ */
 const temperatureResultsTimeline = gsap
   .timeline({ paused: true })
   .to(".thermostat-base-group", {
@@ -283,7 +354,7 @@ const temperatureResultsTimeline = gsap
     ".temperature-results-list",
     {
       height: "auto",
-      marginBottom: -160,
+      marginBottom: -80,
       duration: 0.5,
       ease: "power4.out",
     },
@@ -308,8 +379,8 @@ const temperatureResultsTimeline = gsap
   .to(
     ".thermostat-temp",
     {
-      x: "20%",
-      y: "-110%",
+      x: "25%",
+      y: "-116%",
       scale: 0.8,
       duration: 0.5,
       ease: "power4.out",
@@ -342,29 +413,19 @@ const temperatureResultsTimeline = gsap
     "<"
   )
   .to(
-    ".temperature-actions",
-    {
-      y: -180,
-      duration: 0.6,
-      ease: "power4.out",
-    },
-    "<"
-  )
-  .to(
     ".temperature-results-list",
     {
-      y: -200,
+      opacity: 1,
+      y: "-50%",
       duration: 0.6,
       ease: "power4.out",
     },
     "<"
   );
 
-gsap.set(thermostatControl, { rotation: 45 }).then(() => {
-  thermostatFill.style.strokeDasharray = `${thermostatRingCirc} ${thermostatRingCirc}`;
-  handleThermostatUpdate(gsap.getProperty(thermostatControl, "rotation"));
-});
-
+/**
+ * Parallax
+ */
 gsap.to(".svg-parallax", {
   yPercent: -10,
   ease: "none",
@@ -375,6 +436,11 @@ gsap.to(".svg-parallax", {
     scrub: 0.5,
   },
 });
+
+/**
+ * Thermostat controller
+ */
+gsap.set(thermostatControl, { rotation: 45 });
 
 Draggable.create(thermostatControl, {
   trigger: thermostatKnob,
@@ -388,25 +454,36 @@ Draggable.create(thermostatControl, {
   },
 });
 
-// Init
+/**
+ * Initial page setup
+ */
 const init = () => {
+  hasGuessed = checkCookie();
+
   if (document.body.dataset.mode === "light") {
     displayModeSwitch.checked = true;
   }
 
   setSiteDisplayMode();
-  setThermostatButtonText();
-  hasVoted() && getTemperatureGuessCookie();
 
-  window.addEventListener("keypress", (e) => {
-    if (e.code === "KeyM") {
-      displayModeSwitch.checked = !displayModeSwitch.checked;
-      return setSiteDisplayMode();
-    }
-  });
-
-  displayModeSwitch.addEventListener("click", setSiteDisplayMode);
-  thermostatButton.addEventListener("click", handleThermostatButtonClick);
+  if (!hasGuessed) {
+    handleThermostatUpdate(gsap.getProperty(thermostatControl, "rotation"));
+  } else {
+    gsap.set(thermostatControl, { rotation: getCookieValue(cookieName.angle) });
+    handleThermostatUpdate(getCookieValue(cookieName.angle));
+    setThermostatButtonText();
+    insertPreviousGuessText();
+  }
 };
+
+window.addEventListener("keypress", (e) => {
+  if (e.code === "KeyM") {
+    displayModeSwitch.checked = !displayModeSwitch.checked;
+    return setSiteDisplayMode();
+  }
+});
+
+displayModeSwitch.addEventListener("click", setSiteDisplayMode);
+thermostatButton.addEventListener("click", handleThermostatButtonClick);
 
 init();

@@ -494,7 +494,7 @@ progress::-webkit-progress-value {
     fill: none; }
   #guess-the-temp .svg-skull {
     margin-top: var(--space-md);
-    width: clamp(100px, 8vw, 150px); }
+    width: clamp(100px, 9vw, 150px); }
   #guess-the-temp .svg-stars {
     margin-top: var(--space-md);
     fill: var(--color-primary);
@@ -502,11 +502,11 @@ progress::-webkit-progress-value {
     max-width: 100%;
     min-width: 0; }
   #guess-the-temp .svg-hot-take {
-    width: clamp(200px, 20vw, 250px);
+    width: clamp(180px, 20vw, 250px);
     max-width: 100%;
     min-width: 0;
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% + var(--space-xxs));
     left: 0;
     right: 0;
     margin: auto;
@@ -578,11 +578,27 @@ progress::-webkit-progress-value {
 .thermostat-temp-text {
   font-family: var(--font-heading);
   font-size: clamp(4rem, 6vw, 6rem);
-  line-height: 1; }
+  line-height: 1;
+  -webkit-transition: color calc(var(--duration) / 2) var(--ease);
+  -o-transition: color calc(var(--duration) / 2) var(--ease);
+  transition: color calc(var(--duration) / 2) var(--ease); }
+  .has-cookie .thermostat-temp-text {
+    color: var(--color-primary-offset); }
+
+.temperature-previous-guess {
+  display: block;
+  color: var(--color-primary-offset);
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  -webkit-transition: color calc(var(--duration) / 2) var(--ease);
+  -o-transition: color calc(var(--duration) / 2) var(--ease);
+  transition: color calc(var(--duration) / 2) var(--ease); }
+  .has-cookie .temperature-previous-guess {
+    color: var(--color-primary); }
 
 .thermostat-related-count {
-  opacity: 0;
   margin-top: var(--space-xxs);
+  display: block;
+  opacity: 0;
   color: var(--color-primary-offset); }
 
 .thermostat-control {
@@ -611,7 +627,7 @@ progress::-webkit-progress-value {
   transform: rotate(0.5turn);
   stroke: var(--color-primary);
   stroke-dasharray: 314.159, 314.159;
-  stroke-dashoffset: 274.889; }
+  stroke-dashoffset: 314.159; }
 
 .thermostat-knob {
   fill: var(--color-primary);
@@ -664,26 +680,24 @@ progress::-webkit-progress-value {
 [data-expression="3"] .expression-3 {
   visibility: visible; }
 
-.temperature-actions {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  grid-gap: var(--space-xxs);
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.temperature-results-list {
   position: relative;
-  margin-top: var(--space); }
-  .temperature-actions::before, .temperature-actions::after {
+  margin: 0 auto;
+  height: 0;
+  opacity: 0; }
+  .temperature-results-list::before {
     --border-width: 2px;
     content: "";
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + var(--space-sm));
+    width: 100%;
     height: calc(var(--border-width) * 3);
     border-top: var(--border-width) solid var(--color-secondary-offset);
     border-bottom: var(--border-width) solid var(--color-secondary-offset);
     z-index: -1; }
-
-.temperature-results-list {
-  margin: var(--space) auto 0;
-  height: 0; }
+  .temperature-results-list .button {
+    margin-top: var(--space-xs); }
 
 .secondary-results {
   height: 0;
@@ -692,8 +706,7 @@ progress::-webkit-progress-value {
 .temperature-result {
   display: grid;
   grid-gap: var(--space-xxs);
-  color: var(--color-primary-offset);
-  margin: var(--space-xxs) 0; }
+  color: var(--color-primary-offset); }
   .temperature-result .heading {
     color: var(--color-primary); }
   .temperature-result .value {
@@ -730,7 +743,7 @@ progress::-webkit-progress-value {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  grid-gap: var(--space-xxs) 10%;
+  grid-column-gap: 10%;
   margin-top: var(--space-sm);
   padding-top: var(--space-sm);
   border-top: 3px solid var(--color-secondary-offset); }
