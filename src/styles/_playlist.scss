@@ -2,6 +2,12 @@
 #playlist {
   max-width: 1500px;
 
+  p {
+    max-width: 55ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .svg {
     margin: 0 auto var(--space);
     max-width: clamp(250px, 15vw, 350px);

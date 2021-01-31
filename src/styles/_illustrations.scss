@@ -24,6 +24,14 @@
   transform: translate3d(-3%, 15%, 0);
 }
 
+.svg-outro {
+  width: clamp(80px, 5vw, 100px);
+}
+
+.svg-outro-stars {
+  transform: translateY(25%);
+}
+
 // Animations
 .svg-anim--light {
   opacity: 1;

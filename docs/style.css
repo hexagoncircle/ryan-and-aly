@@ -108,6 +108,14 @@ body {
   -webkit-transform: translate3d(-3%, 15%, 0);
   transform: translate3d(-3%, 15%, 0); }
 
+.svg-outro {
+  width: clamp(80px, 5vw, 100px); }
+
+.svg-outro-stars {
+  -webkit-transform: translateY(25%);
+  -ms-transform: translateY(25%);
+  transform: translateY(25%); }
+
 .svg-anim--light {
   opacity: 1;
   -webkit-filter: blur(0.1px);
@@ -383,6 +391,10 @@ progress::-webkit-progress-value {
 
 #playlist {
   max-width: 1500px; }
+  #playlist p {
+    max-width: 55ch;
+    margin-left: auto;
+    margin-right: auto; }
   #playlist .svg {
     margin: 0 auto var(--space);
     max-width: clamp(250px, 15vw, 350px);
@@ -812,3 +824,8 @@ progress::-webkit-progress-value {
   80% {
     -webkit-transform: translateY(0.25rem);
     transform: translateY(0.25rem); } }
+
+#outro p {
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto; }

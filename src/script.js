@@ -380,7 +380,7 @@ const temperatureResultsTimeline = gsap
     ".thermostat-temp",
     {
       x: "25%",
-      y: "-116%",
+      y: "-118%",
       scale: 0.8,
       duration: 0.5,
       ease: "power4.out",
