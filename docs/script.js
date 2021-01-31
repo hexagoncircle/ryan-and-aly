@@ -416,7 +416,7 @@ const temperatureResultsTimeline = gsap
     ".temperature-results-list",
     {
       opacity: 1,
-      y: "-50%",
+      y: -130,
       duration: 0.6,
       ease: "power4.out",
     },

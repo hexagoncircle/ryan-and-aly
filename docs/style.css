@@ -352,6 +352,32 @@ progress::-webkit-progress-value {
       #introduction .svg {
         display: block; } }
 
+.donation-list {
+  display: grid;
+  grid-gap: var(--space);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  place-items: center;
+  margin-top: var(--space); }
+  .donation-list a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: var(--space-xxs); }
+  .donation-list img {
+    position: relative;
+    display: inline-block;
+    vertical-align: baseline;
+    width: 100%;
+    max-width: 150px; }
+  .donation-list img[src*="cw"] {
+    max-width: 120px; }
+  .donation-list img[src*="aclu"] {
+    max-width: 90px; }
+  .donation-list img[src*="thorn"] {
+    top: -0.25em; }
+  .donation-list img[src*="joyrides"] {
+    top: 0.15em; }
+
 #playlist {
   max-width: 1500px; }
   #playlist .svg {

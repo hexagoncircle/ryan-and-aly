@@ -1,0 +1,13 @@
+// Shared styles
+@import "./src/styles/globals";
+@import "./src/styles/utilities";
+@import "./src/styles/typography";
+@import "./src/styles/illustrations";
+@import "./src/styles/controls";
+@import "./src/styles/sections";
+
+// Page sections
+@import "./src/styles/header";
+@import "./src/styles/introduction";
+@import "./src/styles/playlist";
+@import "./src/styles/temperature";
