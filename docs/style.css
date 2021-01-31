@@ -4,7 +4,7 @@
   --color-primary-offset: hsl(38, 70%, 60%);
   --color-secondary: hsl(44, 31%, 93%);
   --color-secondary-offset: hsl(44, 31%, 83%);
-  --color-highlight: dodgerblue;
+  --color-highlight: hsl(229, 70%, 50%);
   --font-primary: "stratos", sans-serif;
   --font-heading: "moret", serif;
   --font-display: "lust", serif;
@@ -22,7 +22,7 @@
   --color-primary-offset: hsl(15, 4%, 40%);
   --color-secondary: hsl(0, 0%, 8%);
   --color-secondary-offset: hsl(0, 0%, 18%);
-  --color-highlight: yellow; }
+  --color-highlight: hsl(62, 92%, 52%); }
 
 *,
 *::before,
@@ -278,7 +278,7 @@ progress::-webkit-progress-value {
   text-align: center; }
 
 .section {
-  max-width: 60ch;
+  max-width: 65ch;
   text-align: center; }
   .section .heading {
     margin-top: var(--space-md); }
@@ -373,6 +373,9 @@ progress::-webkit-progress-value {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
     padding: var(--space-xxs); }
 
 .svg-logo {

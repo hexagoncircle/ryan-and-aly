@@ -354,7 +354,7 @@ const temperatureResultsTimeline = gsap
     ".temperature-results-list",
     {
       height: "auto",
-      marginBottom: -80,
+      marginBottom: -100,
       duration: 0.5,
       ease: "power4.out",
     },
