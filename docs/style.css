@@ -101,12 +101,14 @@ body {
       min-width: 250px; } }
 
 .svg-desert-right {
-  -webkit-transform: translate3d(4%, 10%, 0);
-  transform: translate3d(4%, 10%, 0); }
+  -webkit-transform: translateY(10%);
+  -ms-transform: translateY(10%);
+  transform: translateY(10%); }
 
 .svg-desert-left {
-  -webkit-transform: translate3d(-3%, 15%, 0);
-  transform: translate3d(-3%, 15%, 0); }
+  -webkit-transform: translate(-3%, 15%);
+  -ms-transform: translate(-3%, 15%);
+  transform: translate(-3%, 15%); }
 
 .svg-outro {
   width: clamp(80px, 5vw, 100px); }
@@ -287,13 +289,17 @@ progress::-webkit-progress-value {
       text-align: left; } }
 
 .header {
+  position: relative;
   display: grid;
-  margin: var(--space-sm) 0;
-  overflow: hidden; }
+  margin: var(--space-sm) 0; }
   @media (min-width: 600px) {
     .header {
       grid-template: auto 1fr / 1fr auto;
       margin: var(--space-lg) 0; } }
+  @media (min-width: 1200px) {
+    .header {
+      min-height: 400px;
+      max-height: 50vh; } }
 
 .header .svg {
   grid-column: 1;
@@ -328,7 +334,7 @@ progress::-webkit-progress-value {
       margin: auto; } }
   .title .names {
     display: block;
-    font-size: clamp(3rem, 7.5vw, 10rem);
+    font-size: clamp(3rem, 7.5vw, 9rem);
     font-family: var(--font-display);
     font-weight: 700;
     font-style: italic;

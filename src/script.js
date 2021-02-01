@@ -368,7 +368,7 @@ const temperatureResultsTimeline = gsap
       duration: 0.25,
       ease: "power2.out",
     },
-    "-=0.25"
+    "-=0.1"
   )
   .to(".svg-skull", {
     x: "-110%",

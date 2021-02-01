@@ -1,12 +1,17 @@
 // Header
 .header {
+  position: relative;
   display: grid;
   margin: var(--space-sm) 0;
-  overflow: hidden;
 
   @media (min-width: $bp-sm) {
     grid-template: auto 1fr / 1fr auto;
     margin: var(--space-lg) 0;
+  }
+
+  @media (min-width: $bp-lg) {
+    min-height: 400px;
+    max-height: 50vh;
   }
 }
 
@@ -38,7 +43,7 @@
 
   .names {
     display: block;
-    font-size: clamp(3rem, 7.5vw, 10rem);
+    font-size: clamp(3rem, 7.5vw, 9rem);
     font-family: var(--font-display);
     font-weight: 700;
     font-style: italic;
