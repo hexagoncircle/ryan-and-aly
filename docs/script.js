@@ -21,8 +21,8 @@ const skull = document.querySelector(".svg-skull");
 
 const hasCookieClassName = "has-cookie";
 const cookieName = {
-  guess: "temperatureGuess",
-  angle: "temperatureAngle",
+  guess: "temperature_guess",
+  angle: "temperature_angle",
 };
 
 let skullActiveExpression = skull.dataset.expression;
@@ -67,12 +67,11 @@ const insertPreviousGuessText = () => {
   temperatureResultsTimeline.to(
     ".temperature-previous-guess",
     {
-      y: -12,
       height: 0,
       opacity: 0,
-      duration: 0.2,
+      duration: 0.1,
     },
-    "-=1.45"
+    "-=1.4"
   );
 };
 
