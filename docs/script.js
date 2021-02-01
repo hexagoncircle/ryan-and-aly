@@ -67,11 +67,12 @@ const insertPreviousGuessText = () => {
   temperatureResultsTimeline.to(
     ".temperature-previous-guess",
     {
+      y: -12,
       height: 0,
       opacity: 0,
       duration: 0.2,
     },
-    "-=1.5"
+    "-=1.45"
   );
 };
 
