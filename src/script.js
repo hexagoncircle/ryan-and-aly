@@ -15,7 +15,7 @@ const temperatureResults = document.getElementById("temperature-results");
 const temperatureResultsTemplate = { primary: "", secondary: "" };
 
 const displayModeSwitch = document.getElementById("mode-switch");
-const apiDomain = "https://api.surveyjs.io/public/v1/Survey/";
+const apiDomain = "https://api.surveyjs.io/public/Survey/";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
 
@@ -89,8 +89,9 @@ const handleThermostatUpdate = (value) => {
 
 const handleThermostatButtonClick = () => {
   thermostatButton.disabled = true;
+  thermostatButton.textContent = "One moment...";
   thermostatButton.removeEventListener("click", handleThermostatUpdate);
-  fetchTemperatureResults();
+  sendTemperatureGuess();
 };
 
 const handleShowAllResultsClick = (e) => {
@@ -140,16 +141,6 @@ const setThermostatButtonText = () => {
     : "Submit this guess";
 };
 
-const setThermostatRelatedCountText = (count) => {
-  if (count > 1) {
-    thermostatRelatedCount.textContent = `${count} others guessed`;
-  } else if (count === 1) {
-    thermostatRelatedCount.textContent = `1 other guessed`;
-  } else {
-    thermostatRelatedCount.textContent = `You guessed it first!`;
-  }
-};
-
 const setThermostatNumber = (value) => {
   thermostatNumber.textContent = value;
 
@@ -184,8 +175,16 @@ const getTemperature = (value) => {
 };
 
 const getTemperatureRelatedCount = (data) => {
-  const match = Object.entries(data).find((temp) => currentGuess == temp[0]);
-  return setThermostatRelatedCountText(match ? match[1] : 0);
+  const t = Object.entries(data).find((temp) => currentGuess == temp[0]);
+  const guesses = t ? t[1] : 1;
+
+  if (guesses > 2) {
+    thermostatRelatedCount.textContent = `${guesses - 1} others guessed`;
+  } else if (guesses === 2) {
+    thermostatRelatedCount.textContent = `1 other guessed`;
+  } else {
+    thermostatRelatedCount.textContent = `You guessed it first!`;
+  }
 };
 
 const createTemperatureResult = ({ temperature, votes, total, index }) => {
@@ -297,8 +296,9 @@ const setTemperatureResults = (results, total) => {
 /**
  * Handle temperature data
  */
-const sendTemperatureValue = () => {
-  if (checkCookie()) {
+const sendTemperatureGuess = () => {
+  if (hasGuessed) {
+    fetchTemperatureResults();
     return;
   }
 
@@ -310,18 +310,19 @@ const sendTemperatureValue = () => {
     body: JSON.stringify({
       PostId: "d12c0918-1995-4f86-91f5-bfd4c373048b",
       SurveyResult: JSON.stringify({
-        temperature: thermostatNumber.textContent,
+        temperature: currentGuess,
       }),
     }),
-  });
+  })
+    .then(() => fetchTemperatureResults())
+    .catch(() => (thermostatButton.textContent = "Can't send right now"));
 
   setCookies();
 };
 
 const fetchTemperatureResults = () => {
   fetch(
-    // `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
-    "./mockResults.json"
+    `${apiDomain}/getResult?resultId=67020da8-7f65-4caf-acad-0da9ead7f0a8&name=temperature`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -336,7 +337,10 @@ const fetchTemperatureResults = () => {
 
       setTemperatureResults(data.QuestionResult, data.AnswersCount);
       getTemperatureRelatedCount(data.QuestionResult);
-    });
+    })
+    .catch(
+      () => (thermostatButton.textContent = "Can't get results at the moment")
+    );
 };
 
 /**

@@ -28,7 +28,7 @@ a[href] {
   font-size: inherit;
   cursor: pointer;
 
-  &:active {
+  &:not(:disabled):active {
     transform: translateY(1px);
   }
 

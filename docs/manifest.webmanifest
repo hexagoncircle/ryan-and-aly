@@ -4,14 +4,9 @@
   "description": "A site to promote our wonderful marriage",
   "icons": [
     {
-      "src": "/images/android-chrome-192x192.png",
+      "src": "/images/android-chrome-144x144.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/images/android-chrome-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "144x144"
     }
   ],
   "start_url": ".",
