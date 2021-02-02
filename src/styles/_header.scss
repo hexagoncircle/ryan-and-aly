@@ -78,6 +78,10 @@
   pointer-events: none;
   transform: translateY(-25%);
   animation: switch-text 2s 0.6s var(--ease) 2 alternate forwards;
+
+  @media (any-hover: none) {
+    display: none;
+  }
 }
 
 @keyframes switch-text {
