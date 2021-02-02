@@ -63,3 +63,29 @@
     }
   }
 }
+
+.mode-switch-text {
+  display: block;
+  position: absolute;
+  top: -0.2rem;
+  left: calc(100% + var(--space-xxs));
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  line-height: 1;
+  text-shadow: var(--color-secondary) 1px 1px 0,
+    var(--color-secondary) 2px 2px 0;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  animation: switch-text 2s var(--ease) 2 alternate forwards;
+}
+
+@keyframes switch-text {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  40%,
+  100% {
+    opacity: 1;
+  }
+}
