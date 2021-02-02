@@ -35,17 +35,28 @@
 // Animations
 .svg-anim--light {
   opacity: 1;
-  filter: blur(0.1px);
 
   [data-mode="dark"] & {
     opacity: 0;
-    filter: blur(5px);
   }
 
   [data-mode="light"] & {
-    transition: filter calc(var(--duration) * 4) calc(var(--duration) / 2)
-        var(--ease),
-      opacity calc(var(--duration) * 4) var(--ease);
+    filter: blur(5px);
+    animation: filter-blur calc(var(--duration) * 4) calc(var(--duration) / 2)
+      var(--ease) forwards;
+    transition: opacity calc(var(--duration) * 4) var(--ease);
+  }
+}
+
+@keyframes filter-blur {
+  from {
+    filter: blur(5px);
+  }
+  99.9% {
+    filter: blur(0.1px);
+  }
+  100% {
+    filter: blur(0);
   }
 }
 
