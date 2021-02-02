@@ -1,0 +1,147 @@
+// Playlist
+#playlist {
+  max-width: 1500px;
+
+  p {
+    max-width: 55ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .svg {
+    margin: 0 auto var(--space);
+    max-width: clamp(250px, 15vw, 350px);
+    fill: var(--color-primary);
+  }
+
+  .svg-disco-ball-alt {
+    display: none;
+  }
+
+  [data-mode="dark"] & {
+    .svg-disco-ball {
+      display: none;
+    }
+
+    .svg-disco-ball-alt {
+      display: block;
+    }
+  }
+
+  .section {
+    max-width: 80ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .heading {
+    margin-top: 0;
+  }
+}
+
+.playlist-container {
+  --cover-size: 400px;
+  margin-top: var(--space-md);
+  align-items: start;
+
+  @media (min-width: $bp-md) {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) 1fr;
+  }
+}
+
+.playlist-cover {
+  position: relative;
+  grid-row: 1 / 3;
+  width: 100%;
+  max-width: var(--cover-size);
+  margin: 0 auto var(--space-md);
+  background-color: var(--color-primary);
+
+  @media (min-width: $bp-md) {
+    max-width: unset;
+    margin: unset;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+.playlist-link {
+  display: inline-block;
+  grid-column: 2;
+  align-self: end;
+  justify-self: start;
+
+  @media (min-width: $bp-md) {
+    margin-left: calc(var(--space-md) - var(--space-xxs));
+  }
+}
+
+// Tracks
+.tracklist {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--cover-size);
+  list-style: decimal-leading-zero;
+  counter-reset: tracklist-counter;
+
+  @media (min-width: $bp-md) {
+    margin: 0 0 0 var(--space-md);
+    width: auto;
+    max-width: unset;
+  }
+}
+
+.track {
+  --art-size: clamp(50px, 5vw, 70px);
+  display: flex;
+  margin-bottom: var(--space);
+  counter-increment: tracklist-counter;
+  text-align: left;
+  font-size: clamp(1.125rem, 1.25vw, 1.25rem);
+  line-height: 1.4;
+
+  &::before {
+    content: counter(tracklist-counter, decimal-leading-zero);
+    flex: 0 0 var(--space-sm);
+    font-feature-settings: "tnum";
+    display: flex;
+    align-items: center;
+    height: var(--art-size);
+    margin-right: var(--space-xxs);
+    font-family: var(--font-heading);
+    color: var(--color-primary-offset);
+  }
+}
+
+.album-art {
+  flex-shrink: 0;
+  width: var(--art-size);
+  height: var(--art-size);
+  margin-right: var(--space-xs);
+  background-color: var(--color-secondary-offset);
+}
+
+.track-info {
+  > * {
+    display: block;
+  }
+
+  .artist {
+    color: var(--color-primary-offset);
+  }
+}
