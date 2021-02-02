@@ -20,6 +20,7 @@
     "glob": "^7.1.4",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-embed-svg": "^1.2.0",
     "gulp-inject-partials": "^1.0.5",
     "gulp-rename": "^1.4.0",
@@ -85,6 +86,17 @@
               "cascade": false
             }
           ]
+        }
+      ]
+    },
+    "minify-css": {
+      "order": 999,
+      "src": [
+        "**/*.css"
+      ],
+      "pipe": [
+        {
+          "require": "gulp-clean-css"
         }
       ]
     }
