@@ -1,0 +1,21 @@
+{
+  "name": "Ryan & Aly Get Married In The Desert",
+  "short_name": "Ryan & Aly",
+  "description": "A site to promote our wonderful marriage",
+  "icons": [
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#000000",
+  "display": "standalone",
+  "theme_color": "#000000"
+}
