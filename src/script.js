@@ -294,9 +294,29 @@ const setTemperatureResults = (results, total) => {
 };
 
 /**
+ * Thermostat controller
+ */
+gsap.set(thermostatControl, { rotation: 45 });
+
+const draggableKnob = Draggable.create(thermostatControl, {
+  trigger: thermostatKnob,
+  type: "rotation",
+  bounds: {
+    minRotation: 0,
+    maxRotation: 180,
+  },
+  onDrag: function () {
+    handleThermostatUpdate(this.rotation);
+  },
+});
+
+/**
  * Handle temperature data
  */
 const sendTemperatureGuess = () => {
+  draggableKnob[0].kill();
+  thermostatKnob.classList.add("is-disabled");
+
   if (hasGuessed) {
     fetchTemperatureResults();
     return;
@@ -438,23 +458,6 @@ gsap.to(".svg-parallax", {
     start: "top",
     end: "+=100%",
     scrub: 0.5,
-  },
-});
-
-/**
- * Thermostat controller
- */
-gsap.set(thermostatControl, { rotation: 45 });
-
-Draggable.create(thermostatControl, {
-  trigger: thermostatKnob,
-  type: "rotation",
-  bounds: {
-    minRotation: 0,
-    maxRotation: 180,
-  },
-  onDrag: function () {
-    handleThermostatUpdate(this.rotation);
   },
 });
 

@@ -207,6 +207,10 @@
   &:active {
     cursor: grabbing;
   }
+
+  &.is-disabled {
+    pointer-events: none;
+  }
 }
 
 // Skull
