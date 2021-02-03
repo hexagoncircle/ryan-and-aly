@@ -23,6 +23,7 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-embed-svg": "^1.2.0",
     "gulp-inject-partials": "^1.0.5",
+    "gulp-minify": "^3.1.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "node-sass": "^4.12.0",
@@ -98,6 +99,27 @@
         {
           "require": "gulp-clean-css"
         }
+      ]
+    },
+    "compress": {
+      "order": 999,
+      "src": [
+        "**/*.js"
+      ],
+      "pipe": [
+        {
+          "require": "gulp-minify",
+          "args": [
+            {
+              "ext": {
+                "min": ".min.js"
+              }
+            }
+          ]
+        }
+      ],
+      "cleanup": [
+        "script.js"
       ]
     }
   },
