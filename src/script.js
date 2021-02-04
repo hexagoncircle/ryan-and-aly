@@ -193,7 +193,7 @@ const createTemperatureResult = ({ temperature, votes, total, index }) => {
       <li class="temperature-result">
         <div class="value">${temperature}°</div>
         <span class="votes">${votes}</span>
-        <progress class="bar" value="${votes}" max="${total}" />
+        <progress class="bar" value="${votes}" max="${total / 3}" />
       </li>
     `;
   }
@@ -204,7 +204,7 @@ const createTemperatureResult = ({ temperature, votes, total, index }) => {
         <span class="heading">${temperature}°</span> top guess
       </div>
       <span class="votes">${votes} people</span>
-      <progress class="bar" value="${votes}" max="${total / 2}" />
+      <progress class="bar" value="${votes}" max="${total / 3.5}" />
     </li>
   `;
 };
