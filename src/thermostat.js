@@ -14,7 +14,6 @@ const temperatureText = document.querySelector(".thermostat-temp-text");
 const temperatureResults = document.getElementById("temperature-results");
 const temperatureResultsTemplate = { primary: "", secondary: "" };
 
-const displayModeSwitch = document.getElementById("mode-switch");
 const apiDomain = "https://api.surveyjs.io/public/Survey/";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
@@ -28,10 +27,6 @@ const cookieName = {
 let skullActiveExpression = skull.dataset.expression;
 let hasGuessed = false;
 let currentGuess, currentAngle;
-
-const setSiteDisplayMode = () => {
-  document.body.dataset.mode = displayModeSwitch.checked ? "dark" : "light";
-};
 
 /**
  * Temperature cookies
@@ -462,16 +457,10 @@ gsap.to(".svg-parallax", {
 });
 
 /**
- * Initial page setup
+ * Initialize thermostat
  */
-const init = () => {
+const initThermostat = () => {
   hasGuessed = checkCookie();
-
-  if (document.body.dataset.mode === "light") {
-    displayModeSwitch.checked = true;
-  }
-
-  setSiteDisplayMode();
 
   if (!hasGuessed) {
     handleThermostatUpdate(gsap.getProperty(thermostatControl, "rotation"));
@@ -483,14 +472,6 @@ const init = () => {
   }
 };
 
-window.addEventListener("keypress", (e) => {
-  if (e.code === "KeyM") {
-    displayModeSwitch.checked = !displayModeSwitch.checked;
-    return setSiteDisplayMode();
-  }
-});
-
-displayModeSwitch.addEventListener("click", setSiteDisplayMode);
 thermostatButton.addEventListener("click", handleThermostatButtonClick);
 
-init();
+initThermostat();

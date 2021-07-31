@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /images/photos/
+Disallow: /joshua-tree-pizza-party/

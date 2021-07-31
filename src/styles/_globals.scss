@@ -42,6 +42,12 @@ $bp-lg: 1200px;
   box-sizing: border-box;
 }
 
+html,
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
 html:focus-within {
   scroll-behavior: smooth;
 }
@@ -53,6 +59,7 @@ body {
   font-size: clamp(1.15rem, 1.25vw, 1.5rem);
   line-height: 1.75;
   margin-bottom: var(--space-lg);
+  width: 100%;
 }
 
 [hidden] {

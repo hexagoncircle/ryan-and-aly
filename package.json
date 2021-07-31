@@ -119,7 +119,8 @@
         }
       ],
       "cleanup": [
-        "script.js"
+        "thermostat.js",
+        "theme.js"
       ]
     }
   },
