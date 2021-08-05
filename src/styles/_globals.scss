@@ -70,6 +70,11 @@ em {
   font-style: italic;
 }
 
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
 // Reduced motion
 @media (prefers-reduced-motion) {
   :root {
