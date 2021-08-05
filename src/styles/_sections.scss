@@ -1,5 +1,6 @@
 // Articles
 .article {
+  position: relative;
   margin-top: var(--space-lg);
   margin-bottom: var(--space-lg);
 }
@@ -7,12 +8,7 @@
 .article-center {
   margin-left: auto;
   margin-right: auto;
-  max-width: 80ch;
   text-align: center;
-}
-
-#ceremony {
-  max-width: 71ch;
 }
 
 .side-gutters {
@@ -46,7 +42,6 @@
 
 // Sections
 .section {
-  max-width: 65ch;
   text-align: center;
 
   .heading {
@@ -55,5 +50,27 @@
 
   @media (min-width: $bp-sm) {
     text-align: left;
+  }
+}
+
+.width-md {
+  max-width: 65ch;
+}
+
+.width-lg {
+  max-width: 80ch;
+}
+
+.width-xl {
+  max-width: 90ch;
+}
+
+// Gallery Page
+#ceremony {
+  .section {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 71ch;
+    text-align: center;
   }
 }

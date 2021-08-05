@@ -9,20 +9,11 @@ const thermostatRelatedCount = document.querySelector(
 );
 const thermostatRingRadius = thermostatFill.r.baseVal.value;
 const thermostatRingCirc = thermostatRingRadius * 2 * Math.PI;
-
 const temperatureText = document.querySelector(".thermostat-temp-text");
 const temperatureResults = document.getElementById("temperature-results");
 const temperatureResultsTemplate = { primary: "", secondary: "" };
-
-const apiDomain = "https://api.surveyjs.io/public/Survey/";
-const resultsData = "./temperatureGuessResults.json";
 const midTemp = { min: 93, max: 100 };
 const skull = document.querySelector(".svg-skull");
-
-const cookieName = {
-  guess: "temperature_guess",
-  angle: "temperature_angle",
-};
 
 let skullActiveExpression = skull.dataset.expression;
 let hasGuessed = false;
@@ -136,10 +127,15 @@ const createTemperatureResult = ({ temperature, votes, total, index }) => {
 /**
  * Temperature guess results
  */
+
 const renderTemperaturePrimaryResults = (results) => {
   temperatureResults.insertAdjacentHTML(
     "afterbegin",
     `
+      <p class="results-intro-copy">
+      ${checkSubmittedGuess(
+        draggableKnob[0].rotation
+      )} It reached a high of 94° on July 17, 2021 at our place in Joshua Tree. However, at the time of our ceremony, it was a balmy 89°</p>
       ${results}
       <button id="show-all-results" class="button button--text">
         Show all results
@@ -237,6 +233,22 @@ const draggableKnob = Draggable.create(thermostatControl, {
 /**
  * Handle temperature data
  */
+const checkSubmittedGuess = (value) => {
+  const temp = getTemperature(value);
+
+  if (temp == 89) {
+    return "You got it!";
+  } else if (temp == 94) {
+    return "";
+  } else if (temp < 89) {
+    return "Too low!";
+  } else if (temp > 94) {
+    return "Too hot!";
+  } else if (temp > 89 || temp < 94) {
+    return "Close!";
+  }
+};
+
 const sendTemperatureGuess = () => {
   draggableKnob[0].kill();
   thermostatKnob.classList.add("is-disabled");
@@ -267,6 +279,7 @@ const temperatureResultsTimeline = gsap
   .to(
     ".temperature-results-list",
     {
+      y: -125,
       height: "auto",
       marginBottom: -100,
       duration: 0.5,
@@ -330,7 +343,7 @@ const temperatureResultsTimeline = gsap
     ".temperature-results-list",
     {
       opacity: 1,
-      y: -130,
+      y: -150,
       duration: 0.6,
       ease: "power4.out",
     },

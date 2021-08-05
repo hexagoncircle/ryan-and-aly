@@ -66,6 +66,10 @@ body {
   display: none;
 }
 
+em {
+  font-style: italic;
+}
+
 // Reduced motion
 @media (prefers-reduced-motion) {
   :root {

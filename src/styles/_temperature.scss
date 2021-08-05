@@ -278,9 +278,7 @@
   &::before {
     --border-width: 2px;
     content: "";
-    position: absolute;
-    left: 0;
-    bottom: calc(100% + var(--space-sm));
+    display: block;
     width: 100%;
     height: calc(var(--border-width) * 3);
     border-top: var(--border-width) solid var(--color-secondary-offset);
@@ -370,4 +368,8 @@
   80% {
     transform: translateY(0.25rem);
   }
+}
+
+.results-intro-copy {
+  padding: var(--space);
 }

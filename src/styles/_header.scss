@@ -93,3 +93,33 @@
     opacity: 1;
   }
 }
+
+// Gallery header
+.gallery-header {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  img {
+    margin-top: var(--space-md);
+    width: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    vertical-align: bottom;
+  }
+
+  .title {
+    margin: unset;
+    position: relative;
+    transform: translateY(-27%);
+  }
+
+  .title .names {
+    font-size: clamp(2rem, 12.2vw, 6rem);
+  }
+
+  .title .tagline {
+    font-size: clamp(1.125rem, 4vw, 1.5rem);
+    margin-top: var(--space-xxs);
+  }
+}

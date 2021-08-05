@@ -145,3 +145,62 @@
     color: var(--color-primary-offset);
   }
 }
+
+#our-record {
+  max-width: 1200px;
+  margin-bottom: var(--space-md);
+
+  .section {
+    text-align: center;
+
+    @media (min-width: $bp-md) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--space-md);
+      text-align: left;
+    }
+  }
+
+  .section .heading {
+    margin-top: var(--space-sm);
+  }
+
+  img {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .playlist-link {
+    grid-column: 1 / -1;
+    margin-top: var(--space-md);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .record-playlist-link {
+    display: inline-block;
+    padding: 0;
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+}
+
+.record-tracklists {
+  @media (min-width: $bp-md) {
+    text-align: left;
+  }
+}
+
+.separator {
+  --border-width: 2px;
+  width: 100%;
+  max-width: 650px;
+  height: calc(var(--border-width) * 3);
+  margin: var(--space-md) auto;
+  padding: 0 var(--space-sm);
+  border: none;
+  border-top: var(--border-width) solid var(--color-secondary-offset);
+  border-bottom: var(--border-width) solid var(--color-secondary-offset);
+  z-index: -1;
+}
