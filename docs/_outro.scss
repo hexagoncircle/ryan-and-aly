@@ -1,0 +1,15 @@
+#outro p {
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#nice-outro {
+  margin-top: var(--space-md);
+
+  p {
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
