@@ -82,11 +82,6 @@
   grid-gap: var(--gap);
 }
 
-.image-wrapper {
-  aspect-ratio: auto;
-  overflow: hidden;
-}
-
 .image {
   object-fit: cover;
   width: 100%;
